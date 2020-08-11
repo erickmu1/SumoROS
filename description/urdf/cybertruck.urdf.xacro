@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="cybertruck" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <link name="base_link"/>
+
+    <!-- Body -->
+    <link name="body_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_body.stl"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_body.stl"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="body_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_link"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </joint>
+
+</robot>
