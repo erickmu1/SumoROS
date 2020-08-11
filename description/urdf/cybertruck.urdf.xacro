@@ -1,29 +1,157 @@
 <?xml version="1.0"?>
 <robot name="cybertruck" xmlns:xacro="http://ros.org/wiki/xacro">
 
+    <!-- Includes -->
+    <xacro:include filename="$(find description)/urdf/constants.xacro"/>
+    <xacro:include filename="$(find description)/urdf/inertias.xacro"/>
+
     <link name="base_link"/>
 
     <!-- Body -->
+    <!-- NOTE: cybertuck uses a frame where "-y" is forward for the model. base_link -> body_link will correct for this -->
     <link name="body_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_body.stl"/>
+                <mesh filename="package://description/urdf/meshes/cybertruck_body.dae"/>
             </geometry>
         </visual>
 
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_body.stl"/>
+                <mesh filename="package://description/urdf/meshes/cybertruck_body.dae"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <mass value="${body_mass}"/>
+            <xacro:body_inertia mass="${body_mass}" length="${body_length}" width="${body_width}" height="${body_height}"/>
+        </inertial>
     </link>
 
     <joint name="body_joint" type="fixed">
         <parent link="base_link"/>
         <child link="body_link"/>
-        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <origin xyz="0 0 0.0" rpy="0 0 ${pi / 2}"/>
+    </joint>
+
+    <!-- Wheels -->
+
+    <!-- Front Left Wheel -->
+    <link name="front_left_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+        </inertial>
+    </link>
+
+    <joint name="front_left_wheel_joint" type="continuous">
+        <parent link="body_link"/>
+        <child link="front_left_wheel_link"/>
+        <origin xyz="${left_wheel} ${front_wheel} ${height_to_wheel}" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- Back Left Wheel -->
+    <link name="back_left_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+        </inertial>
+    </link>
+
+    <joint name="back_left_wheel_joint" type="continuous">
+        <parent link="body_link"/>
+        <child link="back_left_wheel_link"/>
+        <origin xyz="${left_wheel} ${back_wheel} ${height_to_wheel}" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- Front Right Wheel -->
+    <link name="front_right_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+        </inertial>
+    </link>
+
+    <joint name="front_right_wheel_joint" type="continuous">
+        <parent link="body_link"/>
+        <child link="front_right_wheel_link"/>
+        <origin xyz="${right_wheel} ${front_wheel} ${height_to_wheel}" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- Back Right Wheel -->
+    <link name="back_right_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+        </inertial>
+    </link>
+
+    <joint name="back_right_wheel_joint" type="continuous">
+        <parent link="body_link"/>
+        <child link="back_right_wheel_link"/>
+        <origin xyz="${right_wheel} ${back_wheel} ${height_to_wheel}" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
     </joint>
 
 </robot>

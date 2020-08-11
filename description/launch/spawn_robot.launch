@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Open a world in Gazebo -->
-   <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+   <!-- <include file="$(find gazebo_ros)/launch/empty_world.launch"/> -->
 
     <!-- Parse URDF with xacro -->
     <param name="robot_description" command="xacro '$(find description)/urdf/cybertruck.urdf.xacro'"/>
