@@ -4,6 +4,7 @@
     <!-- Includes -->
     <xacro:include filename="$(find description)/urdf/constants.xacro"/>
     <xacro:include filename="$(find description)/urdf/inertias.xacro"/>
+    <xacro:include filename="$(find description)/urdf/plugins.gazebo.xacro"/>
 
     <link name="base_link"/>
 
@@ -38,6 +39,17 @@
 
     <!-- Wheels -->
 
+    <!-- Motor Transmissions -->
+    <xacro:macro name="Transmission" params="joint">
+        <transmission name="trans_${joint}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint}">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${joint}_motor"/>
+        </transmission>
+    </xacro:macro>
+
     <!-- Front Left Wheel -->
     <link name="front_left_wheel_link">
         <visual>
@@ -48,9 +60,9 @@
         </visual>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+                <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
             </geometry>
         </collision>
 
@@ -67,6 +79,8 @@
         <axis xyz="1 0 0"/>
     </joint>
 
+    <xacro:Transmission joint="front_left_wheel_joint"/>
+
     <!-- Back Left Wheel -->
     <link name="back_left_wheel_link">
         <visual>
@@ -77,9 +91,9 @@
         </visual>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_left_wheel.dae"/>
+                <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
             </geometry>
         </collision>
 
@@ -96,6 +110,8 @@
         <axis xyz="1 0 0"/>
     </joint>
 
+    <xacro:Transmission joint="back_left_wheel_joint"/>
+
     <!-- Front Right Wheel -->
     <link name="front_right_wheel_link">
         <visual>
@@ -106,9 +122,9 @@
         </visual>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+                <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
             </geometry>
         </collision>
 
@@ -125,6 +141,8 @@
         <axis xyz="1 0 0"/>
     </joint>
 
+    <xacro:Transmission joint="front_right_wheel_joint"/>
+
     <!-- Back Right Wheel -->
     <link name="back_right_wheel_link">
         <visual>
@@ -135,9 +153,9 @@
         </visual>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
             <geometry>
-                <mesh filename="package://description/urdf/meshes/cybertruck_right_wheel.dae"/>
+                <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
             </geometry>
         </collision>
 
@@ -153,5 +171,7 @@
         <origin xyz="${right_wheel} ${back_wheel} ${height_to_wheel}" rpy="0 0 0"/>
         <axis xyz="1 0 0"/>
     </joint>
+
+    <xacro:Transmission joint="back_right_wheel_joint"/>
 
 </robot>
