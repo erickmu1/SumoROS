@@ -1,5 +1,13 @@
 <launch>
 
+    <!-- Spawn location -->
+    <arg name="x"     value="0"/>
+    <arg name="y"     value="0"/>
+    <arg name="z"     value="0.04"/>
+    <arg name="roll"  value="0"/>
+    <arg name="pitch" value="0"/>
+    <arg name="yaw"   value="0"/> 
+
     <!-- Open a world in Gazebo -->
    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
 
@@ -9,7 +17,9 @@
     <!-- Spawn Caffeine in Gazebo -->
     <node name="spawn_cybertruck" pkg="gazebo_ros" type="spawn_model"
         args="-param robot_description
-              -urdf -model cybertruck" />
+              -urdf -model cybertruck
+              -x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" />
 
     <!-- Setup TF Tree -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>

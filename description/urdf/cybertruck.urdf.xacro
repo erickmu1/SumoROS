@@ -110,7 +110,7 @@
         <axis xyz="1 0 0"/>
     </joint>
 
-    <xacro:Transmission joint="back_left_wheel_joint"/>
+    <!-- <xacro:Transmission joint="back_left_wheel_joint"/> -->
 
     <!-- Front Right Wheel -->
     <link name="front_right_wheel_link">
@@ -172,6 +172,6 @@
         <axis xyz="1 0 0"/>
     </joint>
 
-    <xacro:Transmission joint="back_right_wheel_joint"/>
+    <!-- <xacro:Transmission joint="back_right_wheel_joint"/> -->
 
 </robot>
