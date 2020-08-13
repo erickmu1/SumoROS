@@ -24,6 +24,11 @@
                 <mesh filename="package://description/urdf/meshes/cybertruck_body.dae"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <mass value="${body_mass}"/>
+            <xacro:body_inertia mass="${body_mass}" length="${body_length}" width="${body_width}" height="${body_height}"/>
+        </inertial>
     </link>
 
     <joint name="body_joint" type="fixed">
