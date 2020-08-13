@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="cybertruck_wheels" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Includes -->
+    <xacro:include filename="$(find description)/urdf/constants.xacro"/>
+    <xacro:include filename="$(find description)/urdf/inertias.xacro"/>
+
+    <!-- Wheel macro -->
+    <xacro:macro name="Wheel" params="fb lr">
+        <link name="${fb}_${lr}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <!-- <sphere radius="${wheel_radius}"/> -->
+                    <!-- <cylinder length="${wheel_width}" radius="${wheel_radius}"/> -->
+                    <mesh filename="package://description/urdf/meshes/cybertruck_${lr}_wheel.dae"/>
+                </geometry>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
+                <geometry>
+                    <!-- <box size="${wheel_radius} ${wheel_radius} ${wheel_radius}"/> -->
+                    <!-- <sphere radius="${wheel_radius}"/> -->
+                    <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="${wheel_mass}"/>
+                <!-- <xacro:body_inertia mass="${wheel_mass}" length="${wheel_radius}" width="${wheel_radius}" height="${wheel_radius}"/> -->
+                <!-- <xacro:sphere_inertia mass="${wheel_mass}" radius="${wheel_radius}"/> -->
+                <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+            </inertial>
+        </link>
+
+        <joint name="${fb}_${lr}_wheel_joint" type="continuous">
+            <parent link="body_link"/>
+            <child link="${fb}_${lr}_wheel_link"/>
+            <origin xyz="${left_wheel if lr == 'left' else right_wheel} ${front_wheel if fb == 'front' else back_wheel} ${height_to_wheel}" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- Instantiate wheels -->
+    <xacro:Wheel fb="front" lr="left"/>
+    <xacro:Wheel fb="back" lr="left"/>
+    <xacro:Wheel fb="front" lr="right"/>
+    <xacro:Wheel fb="back" lr="right"/>
+
+</robot>

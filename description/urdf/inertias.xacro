@@ -21,4 +21,13 @@
         />
     </xacro:macro>
 
+    <!-- Sphere -->
+    <xacro:macro name="sphere_inertia" params="mass radius">
+        <inertia
+            ixx="${(2.0 * mass * radius * radius) / 5.0}" ixy="0.0" ixz="0.0" 
+            iyx="0.0" iyy="${(2.0 * mass * radius * radius) / 5.0}" iyz="0.0" 
+            izx="0.0" izy="0.0" izz="${(2.0 * mass * radius * radius) / 5.0}" 
+        />
+    </xacro:macro>
+
 </robot>
