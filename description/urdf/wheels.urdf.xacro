@@ -5,14 +5,23 @@
     <xacro:include filename="$(find description)/urdf/constants.xacro"/>
     <xacro:include filename="$(find description)/urdf/inertias.xacro"/>
 
+    <!-- Motor Transmissions -->	
+    <xacro:macro name="Transmission" params="joint">	
+        <transmission name="trans_${joint}">	
+            <type>transmission_interface/SimpleTransmission</type>	
+            <joint name="${joint}">	
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>	
+            </joint>	
+            <actuator name="${joint}_motor"/>	
+        </transmission>	
+    </xacro:macro>
+
     <!-- Wheel macro -->
     <xacro:macro name="Wheel" params="fb lr">
         <link name="${fb}_${lr}_wheel_link">
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <!-- <sphere radius="${wheel_radius}"/> -->
-                    <!-- <cylinder length="${wheel_width}" radius="${wheel_radius}"/> -->
                     <mesh filename="package://description/urdf/meshes/cybertruck_${lr}_wheel.dae"/>
                 </geometry>
             </visual>
@@ -20,16 +29,12 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
                 <geometry>
-                    <!-- <box size="${wheel_radius} ${wheel_radius} ${wheel_radius}"/> -->
-                    <!-- <sphere radius="${wheel_radius}"/> -->
                     <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
                 </geometry>
             </collision>
 
             <inertial>
                 <mass value="${wheel_mass}"/>
-                <!-- <xacro:body_inertia mass="${wheel_mass}" length="${wheel_radius}" width="${wheel_radius}" height="${wheel_radius}"/> -->
-                <!-- <xacro:sphere_inertia mass="${wheel_mass}" radius="${wheel_radius}"/> -->
                 <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
             </inertial>
         </link>
@@ -40,6 +45,8 @@
             <origin xyz="${left_wheel if lr == 'left' else right_wheel} ${front_wheel if fb == 'front' else back_wheel} ${height_to_wheel}" rpy="0 0 0"/>
             <axis xyz="1 0 0"/>
         </joint>
+
+        <xacro:Transmission joint="${fb}_${lr}_wheel_joint"/>
     </xacro:macro>
 
     <!-- Instantiate wheels -->

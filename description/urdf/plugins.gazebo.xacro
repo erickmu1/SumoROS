@@ -3,80 +3,62 @@
 
     <!-- Constants -->
     <xacro:include filename="$(find description)/urdf/constants.xacro"/>
-    
-    <!-- Differential Drive Controller -->
-    <!-- <gazebo>
-        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 
-            <alwaysOn>true</alwaysOn>
-            <legacyMode>false</legacyMode>
-            <rosDebugLevel>na</rosDebugLevel> -->
-
-            <!-- Plugin update rate (Hz) -->
-            <!-- <updateRate>30</updateRate> -->
-            
-            <!-- Name of joints connecting to wheels -->
-            <!-- <leftJoint>front_left_wheel_joint</leftJoint>
-            <rightJoint>front_right_wheel_joint</rightJoint> -->
-
-            <!-- Wheel properties -->
-            <!-- <wheelSeparation>${wheel_separation}</wheelSeparation>
-            <wheelDiameter>${2.0 * wheel_radius}</wheelDiameter>
-            <wheelAcceleration>0</wheelAcceleration>
-            <wheelTorque>5</wheelTorque>
-            <torque>5</torque> -->
-
-            <!-- Topic to receive geometry_msgs/Twist message commands -->
-            <!-- <commandTopic>cmd_vel</commandTopic> -->
-
-            <!-- Odometry (nav_msgs/Odometry) settings -->
-            <!-- <odometrySource>world</odometrySource>
-            <odometryTopic>odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame> -->
-
-            <!-- Robot frame to calculate odometry from -->
-            <!-- <robotBaseFrame>base_link</robotBaseFrame> -->
-
-            <!-- Publish TF frames -->
-            <!-- <publishTf>true</publishTf>
-            <publishOdomTF>true</publishOdomTF>
-
-            <publishWheelTF>false</publishWheelTF>
-            <publishWheelJointState>true</publishWheelJointState>
-
-        </plugin>
-    </gazebo> -->
-
-    <!-- <gazebo>
-        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-            <updateRate>30.0</updateRate>
-            <robotNamespace>/</robotNamespace>
-            <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
-            <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
-            <leftRearJoint>back_left_wheel_joint</leftRearJoint>
-            <rightRearJoint>back_right_wheel_joint</rightRearJoint>
-            <wheelSeparation>${wheel_separation}</wheelSeparation>
-            <wheelDiameter>${2.0 * wheel_radius}</wheelDiameter>
-            <robotBaseFrame>base_link</robotBaseFrame>
-            <torque>20</torque>
-            <topicName>cmd_vel</topicName>
-            <broadcastTF>false</broadcastTF>
-        </plugin>
-    </gazebo> -->
-
+    <!-- Planar Move Controller -->
     <gazebo>
         <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
             <commandTopic>cmd_vel</commandTopic>
+
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
-            <odometryRate>20.0</odometryRate>
+            <odometryRate>30.0</odometryRate>
+
             <robotBaseFrame>base_link</robotBaseFrame>
         </plugin>
     </gazebo>
 
-    <!-- lets all the transmission tags be read -->
-    <!-- <gazebo>
+    <!-- ROS Control: Reads transmission tags -->
+    <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
-    </gazebo> -->
+    </gazebo>
+
+    <!-- IR Sensor: Range Sensor -->
+    <gazebo reference="base_ir_link">        
+        <sensor type="ray" name="RangeSensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>false</visualize>
+            <update_rate>50</update_rate>
+            <ray>
+                <scan>
+                <horizontal>
+                    <samples>10</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>-0.14835</min_angle>
+                    <max_angle>0.14835</max_angle>
+                </horizontal>
+                <vertical>
+                    <samples>10</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>-0.14835</min_angle>
+                    <max_angle>0.14835</max_angle> 
+                </vertical>
+                </scan>
+                <range>
+                <min>0.01</min>
+                <max>2</max>
+                <resolution>0.02</resolution>
+                </range>
+            </ray>
+            <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+                <gaussianNoise>0.005</gaussianNoise>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>50</updateRate>
+                <topicName>sensor/ir</topicName>
+                <frameName>base_ir_link</frameName>
+                <radiation>INFRARED</radiation>
+                <fov>0.2967</fov>
+            </plugin>
+        </sensor>  
+    </gazebo>
 
 </robot>

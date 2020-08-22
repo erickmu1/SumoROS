@@ -40,4 +40,13 @@
     <!-- Wheels -->
     <xacro:include filename="$(find description)/urdf/wheels.urdf.xacro"/>
 
+    <!-- IR Sensor -->
+    <link name="base_ir_link"/>
+
+    <joint name="base_ir_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="base_ir_link"/>
+        <origin xyz="0 ${front_wheel} ${-height_to_wheel}" rpy="0 0 ${-pi / 2}"/>
+    </joint>
+
 </robot>
