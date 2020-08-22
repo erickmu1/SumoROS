@@ -95,8 +95,8 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: robot_description
-      TF Prefix: ""
+      Robot Description: test/robot_description
+      TF Prefix: test
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -107,14 +107,14 @@ Visualization Manager:
       Enabled: true
       Name: Range
       Queue Size: 1
-      Topic: /sensor/ir
+      Topic: test/sensor/ir
       Unreliable: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: odom
+    Fixed Frame: test/odom
     Frame Rate: 15
   Name: root
   Tools:

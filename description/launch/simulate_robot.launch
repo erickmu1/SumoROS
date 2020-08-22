@@ -1,0 +1,15 @@
+<launch>
+
+    <arg name="use_gui" default="false"/>
+
+    <!-- Open a world in Gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg use_gui)"/>
+    </include>
+
+    <!-- Spawn the robot -->
+    <include file="$(find description)/launch/spawn_robot.launch">
+        <arg name="robot_ns" value="test"/>
+    </include>
+
+</launch>
