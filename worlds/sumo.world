@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <gui>
+      <camera name="user_camera">
+        <pose>0 0 3.5  0 1.570796 0</pose>
+      </camera>
+    </gui>
+
+    <include>
+      <pose>0.04 0.125 0  0 0 0</pose>
+      <uri>model://sumo_ring</uri>
+    </include>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>1.0 1.0 1.0 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <light type="directional" name="some_light">
+      <pose>0 0 4  0 0 0</pose>
+      <diffuse>0.7 0.7 0.7 0</diffuse>
+      <specular>1 1 1 0</specular>
+      <direction>-1 -1 -1</direction>
+    </light>
+  </world>
+</sdf>
