@@ -4,16 +4,47 @@
     <!-- Constants -->
     <xacro:include filename="$(find description)/urdf/constants.xacro"/>
 
-    <!-- Planar Move Controller -->
+    <!-- TODO: ensure we can turn properly! -->
+    <!-- Differential Drive Controller -->
     <gazebo>
-        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+            <alwaysOn>true</alwaysOn>
+            <legacyMode>false</legacyMode>
+            <rosDebugLevel>na</rosDebugLevel> -->
+
+            <!-- Plugin update rate (Hz) -->
+            <updateRate>30</updateRate>
+            
+            <!-- Name of joints connecting to wheels -->
+            <leftJoint>front_left_wheel_joint</leftJoint>
+            <rightJoint>front_right_wheel_joint</rightJoint>
+
+            <!-- Wheel properties -->
+            <wheelSeparation>${wheel_separation}</wheelSeparation>
+            <wheelDiameter>${2.0 * wheel_radius}</wheelDiameter>
+            <wheelAcceleration>0</wheelAcceleration>
+            <wheelTorque>5</wheelTorque>
+            <torque>5</torque>
+
+            <!-- Topic to receive geometry_msgs/Twist message commands -->
             <commandTopic>cmd_vel</commandTopic>
 
+            <!-- Odometry (nav_msgs/Odometry) settings -->
+            <odometrySource>world</odometrySource>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
-            <odometryRate>30.0</odometryRate>
 
+            <!-- Robot frame to calculate odometry from -->
             <robotBaseFrame>base_link</robotBaseFrame>
+
+            <!-- Publish TF frames -->
+            <publishTf>true</publishTf>
+            <publishOdomTF>true</publishOdomTF>
+
+            <publishWheelTF>false</publishWheelTF>
+            <publishWheelJointState>true</publishWheelJointState>
+
         </plugin>
     </gazebo>
 

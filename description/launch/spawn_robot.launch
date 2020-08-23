@@ -3,12 +3,12 @@
     <arg name="robot_ns" default=""/>
 
     <!-- Spawn location -->
-    <arg name="x"     value="0"/>
-    <arg name="y"     value="0"/>
-    <arg name="z"     value="0.05"/>
-    <arg name="roll"  value="0"/>
-    <arg name="pitch" value="0"/>
-    <arg name="yaw"   value="0"/>
+    <arg name="x"     default="0"/>
+    <arg name="y"     default="0"/>
+    <arg name="z"     default="0.05"/>
+    <arg name="roll"  default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw"   default="0"/>
 
     <group ns="$(arg robot_ns)">
         <!-- TF Prefix: since "ns" does not affect TF tree -->
