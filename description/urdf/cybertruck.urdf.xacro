@@ -49,4 +49,21 @@
         <origin xyz="0 ${front_wheel} ${-height_to_wheel}" rpy="0 0 ${-pi / 2}"/>
     </joint>
 
+    <!-- Illuminance Sensor -->
+    <link name="light_link"/>
+
+    <joint name="light_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="light_link"/>
+        <origin xyz="0 ${-body_length} 0" rpy="0 ${pi / 2} ${pi / 2}"/>
+    </joint>
+
+    <link name="light_link_optical"/>
+
+    <joint name="light_optical_joint" type="fixed">
+        <parent link="light_link"/>
+        <child link="light_link_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+
 </robot>

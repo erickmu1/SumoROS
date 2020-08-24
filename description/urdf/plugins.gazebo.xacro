@@ -92,4 +92,43 @@
         </sensor>  
     </gazebo>
 
+    <!-- Illuminance Sensor: Inherits from Camera -->
+    <!-- NOTE: illuminance only published if the image topic is being read from! -->
+    <gazebo reference="light_link">
+        <sensor name='light_sensor' type='camera'>
+            <camera name='light_sensor'>
+                <horizontal_fov>1.047</horizontal_fov>
+                <image>
+                    <width>320</width>
+                    <height>240</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.01</near>
+                    <far>10</far>
+                </clip>
+            </camera>
+
+            <plugin name="gazebo_light_sensor_plugin" filename="libgazebo_light_sensor_plugin.so">
+                <cameraName>light_sensor</cameraName>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10</updateRate>
+
+                <imageTopicName>rgb/image_raw</imageTopicName>
+                <depthImageTopicName>depth/image_raw</depthImageTopicName>
+                <pointCloudTopicName>depth/points</pointCloudTopicName>
+                <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+                <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+
+                <frameName>light_link_optical</frameName>
+
+                <distortion_K1>0.0</distortion_K1>
+                <distortion_K2>0.0</distortion_K2>
+                <distortion_K3>0.0</distortion_K3>
+                <distortion_T1>0.0</distortion_T1>
+                <distortion_T2>0.0</distortion_T2>
+            </plugin>
+        </sensor>
+    </gazebo>
+
 </robot>
