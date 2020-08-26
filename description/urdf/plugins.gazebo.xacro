@@ -89,7 +89,7 @@
                 <gaussianNoise>0.005</gaussianNoise>
                 <alwaysOn>true</alwaysOn>
                 <updateRate>${range_sensor_update_rate}</updateRate>
-                <topicName>sensor/ir</topicName>
+                <topicName>range_sensor/ir</topicName>
                 <frameName>base_ir_link</frameName>
                 <radiation>INFRARED</radiation>
                 <fov>${range_sensor_fov}</fov>

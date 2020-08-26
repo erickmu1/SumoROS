@@ -34,6 +34,7 @@ void CacheIlluminanceSensorReading(const sensor_msgs::Illuminance::ConstPtr& msg
 }
 
 /* Executes sumo competition algorithm */
+
 geometry_msgs::Twist ComputeCmdVel()
 {
     geometry_msgs::Twist cmd_vel;
@@ -100,7 +101,7 @@ int main(int argc, char **argv)
     * is the number of messages that will be buffered up before beginning to throw
     * away the oldest ones.
     */
-    ros::Subscriber range_sub = nh.subscribe("sensor/ir", 10, CacheRangeSensorReading);
+    ros::Subscriber range_sub = nh.subscribe("range_sensor/ir", 10, CacheRangeSensorReading);
     ros::Subscriber illuminance_sub = nh.subscribe("light_sensor/illuminance", 10, CacheIlluminanceSensorReading);
 
    /**
