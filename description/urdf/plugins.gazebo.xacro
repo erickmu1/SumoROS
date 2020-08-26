@@ -4,14 +4,13 @@
     <!-- Constants -->
     <xacro:include filename="$(find description)/urdf/constants.xacro"/>
 
-    <!-- TODO: ensure we can turn properly! -->
     <!-- Differential Drive Controller -->
     <gazebo>
         <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 
             <alwaysOn>true</alwaysOn>
             <legacyMode>false</legacyMode>
-            <rosDebugLevel>na</rosDebugLevel> -->
+            <rosDebugLevel>na</rosDebugLevel>
 
             <!-- Plugin update rate (Hz) -->
             <updateRate>30</updateRate>
@@ -54,46 +53,49 @@
     </gazebo>
 
     <!-- IR Sensor: Range Sensor -->
+    <xacro:property name="range_sensor_fov" value="${5*pi/180}"/>
+    <xacro:property name="range_sensor_update_rate" value="50"/>
+    <xacro:property name="range_sensor_max_range" value="0.8"/>
+
     <gazebo reference="base_ir_link">        
         <sensor type="ray" name="RangeSensor">
             <pose>0 0 0 0 0 0</pose>
             <visualize>false</visualize>
-            <update_rate>50</update_rate>
+            <update_rate>${range_sensor_update_rate}</update_rate>
             <ray>
                 <scan>
-                <horizontal>
-                    <samples>10</samples>
-                    <resolution>1</resolution> 
-                    <min_angle>-0.14835</min_angle>
-                    <max_angle>0.14835</max_angle>
-                </horizontal>
-                <vertical>
-                    <samples>10</samples>
-                    <resolution>1</resolution> 
-                    <min_angle>-0.14835</min_angle>
-                    <max_angle>0.14835</max_angle> 
-                </vertical>
+                    <horizontal>
+                        <samples>10</samples>
+                        <resolution>1</resolution> 
+                        <min_angle>${-range_sensor_fov/2}</min_angle>
+                        <max_angle>${range_sensor_fov/2}</max_angle>
+                    </horizontal>
+                    <vertical>
+                        <samples>10</samples>
+                        <resolution>1</resolution> 
+                        <min_angle>${-range_sensor_fov/2}</min_angle>
+                        <max_angle>${range_sensor_fov/2}</max_angle> 
+                    </vertical>
                 </scan>
                 <range>
-                <min>0.01</min>
-                <max>2</max>
-                <resolution>0.02</resolution>
+                    <min>0.01</min>
+                    <max>10</max>
+                    <resolution>0.02</resolution>
                 </range>
             </ray>
             <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
                 <gaussianNoise>0.005</gaussianNoise>
                 <alwaysOn>true</alwaysOn>
-                <updateRate>50</updateRate>
+                <updateRate>${range_sensor_update_rate}</updateRate>
                 <topicName>sensor/ir</topicName>
                 <frameName>base_ir_link</frameName>
                 <radiation>INFRARED</radiation>
-                <fov>0.2967</fov>
+                <fov>${range_sensor_fov}</fov>
             </plugin>
         </sensor>  
     </gazebo>
 
     <!-- Illuminance Sensor: Inherits from Camera -->
-    <!-- NOTE: illuminance only published if the image topic is being read from! -->
     <gazebo reference="light_link">
         <sensor name='light_sensor' type='camera'>
             <camera name='light_sensor'>
@@ -112,7 +114,7 @@
             <plugin name="gazebo_light_sensor_plugin" filename="libgazebo_light_sensor_plugin.so">
                 <cameraName>light_sensor</cameraName>
                 <alwaysOn>true</alwaysOn>
-                <updateRate>10</updateRate>
+                <updateRate>50</updateRate>
 
                 <imageTopicName>rgb/image_raw</imageTopicName>
                 <depthImageTopicName>depth/image_raw</depthImageTopicName>

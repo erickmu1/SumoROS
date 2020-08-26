@@ -13,5 +13,5 @@
     <include file="$(find description)/launch/spawn_robot.launch">
         <arg name="robot_ns" value="sumo"/>
     </include>
-    
+
 </launch>

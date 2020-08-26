@@ -53,8 +53,6 @@ namespace gazebo
 
     GazeboRosCameraUtils::Load(_parent, _sdf);
 
-    ROS_INFO("UwU HELLO!");
-
     // Parse SDF
     if (_sdf->HasElement("robotNamespace"))
     {

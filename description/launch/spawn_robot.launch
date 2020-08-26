@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="robot_ns" default=""/>
+    <arg name="robot_ns" default="/"/>
 
     <!-- Spawn location -->
     <arg name="x"     default="0"/>

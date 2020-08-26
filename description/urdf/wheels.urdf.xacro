@@ -6,18 +6,21 @@
     <xacro:include filename="$(find description)/urdf/inertias.xacro"/>
 
     <!-- Motor Transmissions -->	
-    <xacro:macro name="Transmission" params="joint">	
-        <transmission name="trans_${joint}">	
-            <type>transmission_interface/SimpleTransmission</type>	
-            <joint name="${joint}">	
+    <xacro:macro name="Transmission" params="joint">
+        <transmission name="${joint}_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            
+            <joint name="${joint}">
                 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>	
-            </joint>	
-            <actuator name="${joint}_motor"/>	
+            </joint>
+
+            <actuator name="${joint}_motor"/>
         </transmission>	
     </xacro:macro>
 
     <!-- Wheel macro -->
     <xacro:macro name="Wheel" params="fb lr">
+        <!-- Wheel link -->
         <link name="${fb}_${lr}_wheel_link">
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -29,16 +32,16 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
                 <geometry>
-                    <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+                    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
                 </geometry>
             </collision>
 
             <inertial>
-                <mass value="${wheel_mass}"/>
-                <xacro:wheel_inertia mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}"/>
+                <xacro:wheel_inertial m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
             </inertial>
         </link>
 
+        <!-- Wheel joint -->
         <joint name="${fb}_${lr}_wheel_joint" type="continuous">
             <parent link="body_link"/>
             <child link="${fb}_${lr}_wheel_link"/>
@@ -46,13 +49,25 @@
             <axis xyz="1 0 0"/>
         </joint>
 
-        <xacro:Transmission joint="${fb}_${lr}_wheel_joint"/>
+        <!-- Other attributes-->
+        <xacro:if value="${fb == 'front'}">
+            <!-- Add Transmission to Wheels connected to the motor -->
+            <xacro:Transmission joint="${fb}_${lr}_wheel_joint"/>
+        </xacro:if>
+        <xacro:if value="${fb == 'back'}">
+            <!-- Other Wheels serve for balance only, remove friction to enable turning -->
+            <gazebo reference ="${fb}_${lr}_wheel_link">
+                <mu1 value="0.0"/>
+                <mu2 value="0.0"/>
+            </gazebo>
+        </xacro:if>
     </xacro:macro>
 
     <!-- Instantiate wheels -->
     <xacro:Wheel fb="front" lr="left"/>
-    <xacro:Wheel fb="back" lr="left"/>
     <xacro:Wheel fb="front" lr="right"/>
+
+    <xacro:Wheel fb="back" lr="left"/>
     <xacro:Wheel fb="back" lr="right"/>
 
 </robot>

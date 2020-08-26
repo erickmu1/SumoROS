@@ -26,8 +26,7 @@
         </collision>
 
         <inertial>
-            <mass value="${body_mass}"/>
-            <xacro:body_inertia mass="${body_mass}" length="${body_length}" width="${body_width}" height="${body_height}"/>
+            <xacro:body_inertial m="${body_mass}" l="${body_length}" w="${body_width}" h="${body_height}"/>
         </inertial>
     </link>
 
