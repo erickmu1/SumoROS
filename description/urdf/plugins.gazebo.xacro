@@ -44,6 +44,8 @@
             <publishWheelTF>false</publishWheelTF>
             <publishWheelJointState>true</publishWheelJointState>
 
+            <!-- TODO: enforce velocity/acceleration limits -->
+
         </plugin>
     </gazebo>
 
@@ -79,7 +81,7 @@
                 </scan>
                 <range>
                     <min>0.01</min>
-                    <max>10</max>
+                    <max>${range_sensor_max_range}</max>
                     <resolution>0.02</resolution>
                 </range>
             </ray>
@@ -96,6 +98,7 @@
     </gazebo>
 
     <!-- Illuminance Sensor: Inherits from Camera -->
+    <!-- NOTE: illuminance topic == <cameraName>/illuminance -->
     <gazebo reference="light_link">
         <sensor name='light_sensor' type='camera'>
             <camera name='light_sensor'>

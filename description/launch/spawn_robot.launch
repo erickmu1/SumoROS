@@ -27,6 +27,9 @@
         <!-- Setup TF Tree -->
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+        <!-- Run Algorithm -->
+        <node name="sumo_algo" pkg="algorithm" type="sumo_algo" output="screen"/>
     </group>
 
 </launch>
