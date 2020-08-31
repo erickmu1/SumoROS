@@ -1,1 +1,6 @@
-cp -r models/sumo_ring ~/.gazebo/models
+# Enable running this script from any directory
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path"
+
+# Copy all models in /worlds/models to gazebo's model directory
+cp -vr models ~/.gazebo/models

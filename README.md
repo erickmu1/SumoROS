@@ -31,6 +31,10 @@ The code this package is adapted from is [this](https://github.com/SMARTlab-Purd
 
 A simple sumo ring consisting of a black circle with a radius of about 1 meter and white outside of the circle. To be able to use this world run:
 ```
+# Make the shell script executable
 chmod +x ./worlds/install_world.sh
+
+# Run the shell script
+./worlds/install_world.sh
 ```
 > This installs the sumo_ring model (written in SDF) to the `~./gazebo/models` folder. General members would not recreate this plugin themselves, rather it would be part of a template repository.
