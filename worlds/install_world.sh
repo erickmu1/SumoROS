@@ -3,4 +3,5 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # Copy all models in /worlds/models to gazebo's model directory
-cp -vr models ~/.gazebo/models
+mkdir -p ~/.gazebo/models
+cp -vr models/sumo_ring ~/.gazebo/models

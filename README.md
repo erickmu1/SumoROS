@@ -1,5 +1,7 @@
 # SUMO bot on ROS #
 
+> Tested and working for [ROS](http://wiki.ros.org/Installation/Ubuntu) melodic. Issue with `tf_prefix` in ROS noetic.
+
 This repository tests whether one can set up a SUMO bot competition using ROS + Gazebo. The structure of this repo reflects how a SUMO bot would be built by general members of [UTRA](https://www.utra.ca/) (University of Toronto Robotics Association) [SUMO](https://www.utra.ca/teams/SUMO/).
 
 The expected pipeline for completing a sumo bot is as follows:
